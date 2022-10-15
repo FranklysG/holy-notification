@@ -1,9 +1,6 @@
-
-
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "baseUrl": "src",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
