@@ -19,7 +19,7 @@ export function Routes() {
         {singned ? (
           <Screen name={"Home"} component={Home} />
         ) : (
-          <Screen name="SignIn" component={SignIn} />
+          <Screen name={"SignIn"} component={SignIn} />
         )}
       </Navigator>
     </NavigationContainer>
