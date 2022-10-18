@@ -13,6 +13,7 @@
     "axios": "^1.1.3",
     "expo": "~46.0.16",
     "expo-constants": "^13.2.4",
+    "expo-device": "^4.3.0",
     "expo-font": "~10.2.0",
     "expo-modules-autolinking": "^0.10.3",
     "expo-notifications": "^0.16.1",

@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Text,
   View,
   ImageBackground,
   TouchableOpacity,
-  Share
+  Share,
+  Platform,
 } from "react-native";
-import * as Notifications from 'expo-notifications';
-import Constants from 'expo-constants';
+import * as Notifications from "expo-notifications";
+import * as Device from "expo-device";
+import Constants from "expo-constants";
 import { useBook } from "../../hooks/useBooks";
 
 import {
+  BellSnoozeIcon,
   ArrowLeftIcon,
   MagnifyingGlassIcon,
   HeartIcon,
@@ -31,6 +34,11 @@ Notifications.setNotificationHandler({
 });
 
 export function Home() {
+  const [expoPushToken, setExpoPushToken] = useState<string |null>("");
+  const [notification, setNotification] = useState<boolean>(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
   const { name, author, group, chapter, number, text } = useBook();
   const [liked, setLiked] = useState(false);
 
@@ -52,7 +60,66 @@ export function Home() {
       alert(error);
     }
   };
-  
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const time = new Date(Date.now());
+      time.setHours(6);
+      time.setMinutes(0);
+      time.setSeconds(0);
+      const now = new Date("2022-10-18T07:00:00.000Z");
+      const difference = now.getTime() - time.getTime(); // This will give difference in milliseconds
+      const minutes = Math.round(difference / 60000);
+
+      if (minutes >= 0 && minutes <= 180) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: `🕊️ Mensagem de ${author} - ${chapter} : ${number}`,
+            body: text,
+            data: { data: "goes here" },
+          },
+          trigger: { seconds: 2 },
+        });
+        const nextTriggerDate = await Notifications.getNextTriggerDateAsync({
+          hour: 7,
+          minute: 0,
+        });
+
+        console.log(
+          nextTriggerDate === null
+            ? "No next trigger date"
+            : new Date(nextTriggerDate)
+        );
+      }
+    })();
+  }, []);
+
+  const removeNotification = useCallback(async () => {
+    await Notifications.cancelAllScheduledNotificationsAsync();
+  }, []);
 
   return (
     <>
@@ -63,10 +130,12 @@ export function Home() {
       >
         <View
           className="w-11/12 mx-auto"
-          style={{ marginTop: Constants.statusBarHeight+20}}
+          style={{ marginTop: Constants.statusBarHeight + 20 }}
         >
           <View className="w-full flex flex-row justify-between">
-            <ArrowLeftIcon color={"#fff"} width={20} height={20} />
+            <TouchableOpacity onPress={() => removeNotification()}>
+              <BellSnoozeIcon color={"#fff"} width={30} height={30} />
+            </TouchableOpacity>
             <MagnifyingGlassIcon color={"transparent"} width={20} height={20} />
           </View>
         </View>
@@ -142,4 +211,37 @@ export function Home() {
       </View>
     </>
   );
+}
+
+async function registerForPushNotificationsAsync() {
+  let token;
+
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+  }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      alert("Failed to get push token for push notification!");
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+  } else {
+    alert("Must use physical device for Push Notifications");
+  }
+
+  return token;
 }

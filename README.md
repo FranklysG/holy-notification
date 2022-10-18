@@ -12,19 +12,23 @@
 
 <p align="left">
 <code>
-<img src="assets/readme/04.png" height="450px">
-</code>
-<code>
 <img src="assets/readme/01.jpeg" height="450px">
 </code>
 <code>
 <img src="assets/readme/02.jpeg" height="450px">
 </code>
+<code>
+<img src="assets/readme/03.jpeg" height="450px">
+</code>
 </p>
 <p align="left">
 <code>
-<img src="assets/readme/03.jpeg" height="450px">
-</code></p>
+<img src="assets/readme/04.jpeg" height="450px">
+</code>
+<code>
+<img src="assets/readme/05.png" height="450px">
+</code>
+</p>
 
 ## 📌 Find me!
 
