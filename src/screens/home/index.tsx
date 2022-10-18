@@ -90,7 +90,7 @@ export function Home() {
       time.setHours(6);
       time.setMinutes(0);
       time.setSeconds(0);
-      const now = new Date("2022-10-18T07:00:00.000Z");
+      const now = new Date();
       const difference = now.getTime() - time.getTime(); // This will give difference in milliseconds
       const minutes = Math.round(difference / 60000);
 
@@ -104,10 +104,10 @@ export function Home() {
           trigger: { seconds: 2 },
         });
         const nextTriggerDate = await Notifications.getNextTriggerDateAsync({
-          hour: 7,
-          minute: 0,
+          hour: 5,
+          minute: 43,
         });
-
+        console.log('next notification: ')
         console.log(
           nextTriggerDate === null
             ? "No next trigger date"

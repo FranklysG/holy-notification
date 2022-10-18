@@ -56,7 +56,7 @@ function BookProvider({ children }: BookProviderProps) {
   useEffect(() => {
     (async () => {
       await axios
-        .get("/verses/nvi/randoms")
+        .get("/verses/nvi/random")
         .then((response) => response.data)
         .then((data) => {
           setAbbrev(data.book?.abbrev?.pt ?? "pt");
