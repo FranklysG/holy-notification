@@ -20,6 +20,7 @@
     "expo-permissions": "^13.2.0",
     "expo-splash-screen": "~0.16.2",
     "expo-status-bar": "~1.4.0",
+    "expo-updates": "^0.14.6",
     "lodash": "^4.17.21",
     "nativewind": "^2.0.11",
     "react": "18.0.0",
