@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "holy-notification",
+    "name": "Holy Notification",
     "slug": "holy-notification",
+    "owner": "franklysg",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,8 +26,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      },
-      "package": "com.holynotification"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -35,12 +35,8 @@
       [
         "expo-notifications",
         {
-          "icon": "./local/assets/notification-icon.png",
-          "color": "#ffffff",
-          "sounds": [
-            "./local/assets/notification-sound.wav",
-            "./local/assets/notification-sound-other.wav"
-          ]
+          "icon": "./assets/icon.png",
+          "color": "#ffffff"
         }
       ]
     ]

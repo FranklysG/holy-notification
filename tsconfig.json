@@ -16,6 +16,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "app.config.js", "index.js", "metro.config.js", "react-native.config.js"],
   "exclude": ["node_modules"]
 }

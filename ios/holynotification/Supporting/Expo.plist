@@ -8,11 +8,11 @@
     <true/>
     <key>EXUpdatesLaunchWaitMs</key>
     <integer>0</integer>
+    <key>EXUpdatesReleaseChannel</key>
+    <string>staging</string>
     <key>EXUpdatesSDKVersion</key>
     <string>46.0.0</string>
     <key>EXUpdatesURL</key>
     <string>https://exp.host/@franklysg/holy-notification</string>
-    <key>EXUpdatesReleaseChannel</key>
-    <string>staging</string>
   </dict>
 </plist>
