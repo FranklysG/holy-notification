@@ -8,6 +8,8 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/config-plugins": "^5.0.0",
+    "@expo/prebuild-config": "^5.0.1",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/stack": "^6.3.2",
     "axios": "^1.1.3",
